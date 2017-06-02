@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>key only</title>
+</head>
+<body>
+<div>
+    <p id="encode"></p>
+    <p id="decode"></p>
+</div>
+<script src="js/aes_key.js"></script>
+    <script type="text/javascript">
+        var pwd="Golden_Jet";
+
+        function Encrypt(word){
+            return CryptoJS.AES.encrypt(word,pwd).toString();
+        }
+
+        function Decrypt(word){
+            return CryptoJS.AES.decrypt(word,pwd).toString(CryptoJS.enc.Utf8);
+        }
+
+        var mm = Encrypt('hello123');
+        console.log(mm);
+        var jm = Decrypt(mm);
+        console.log(jm)
+
+    </script>
+</body>
+</html>
