@@ -29,8 +29,16 @@ public class AESUtil {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keygen= KeyGenerator.getInstance("AES");
             //2.根据ecnodeRules规则初始化密钥生成器
-            //生成一个128位的随机源,根据传入的字节数组
-            keygen.init(128, new SecureRandom(encodeRules.getBytes()));
+            
+			
+			// 根据传入的字节数组产生的随机源，在windows上每次都产生相同的key，但是solaris或者部分Linux系统上则不然
+			//生成一个128位的随机源,根据传入的字节数组
+            //keygen.init(128, new SecureRandom(encodeRules.getBytes()));
+            //防止linux下 随机生成key
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+			secureRandom.setSeed(encodeRules.getBytes());
+            keygen.init(128, secureRandom);
+            
             //3.产生原始对称密钥
             SecretKey original_key=keygen.generateKey();
             //4.获得原始对称密钥的字节数组
@@ -81,8 +89,17 @@ public class AESUtil {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keygen=KeyGenerator.getInstance("AES");
             //2.根据ecnodeRules规则初始化密钥生成器
-            //生成一个128位的随机源,根据传入的字节数组
-            keygen.init(128, new SecureRandom(encodeRules.getBytes()));
+			
+			
+			// 根据传入的字节数组产生的随机源，在windows上每次都产生相同的key，但是solaris或者部分Linux系统上则不然
+			//生成一个128位的随机源,根据传入的字节数组
+            //keygen.init(128, new SecureRandom(encodeRules.getBytes()));
+            //防止linux下 随机生成key
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+			secureRandom.setSeed(encodeRules.getBytes());
+            keygen.init(128, secureRandom);
+			
+			
             //3.产生原始对称密钥
             SecretKey original_key=keygen.generateKey();
             //4.获得原始对称密钥的字节数组
